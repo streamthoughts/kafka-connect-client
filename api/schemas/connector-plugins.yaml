@@ -1,0 +1,16 @@
+ConnectorPlugin:
+  type: object
+  properties:
+    class:
+      type: string
+      description: 'The connector class name.'
+    version:
+      type: string
+      description: 'The connector version.'
+    type:
+      type: string
+      description: 'The connector type.'
+  required:
+    - class
+    - version
+    - type

@@ -1,0 +1,58 @@
+ConnectorStatus:
+  type: object
+  properties:
+    name:
+      type: string
+      description: 'The name of the connector'
+    connector:
+      $ref: '#/ConnectorStatus'
+      description: 'Configuration parameters for the connector.'
+    tasks:
+      type: array
+      items:
+        $ref: '#/TaskState'
+      description: The states of tasks
+  required:
+    - name
+    - connector
+    - tasks
+
+ConnectorState:
+  type: object
+  required:
+    - state
+    - worker_id
+  properties:
+    worker_id:
+      type: integer
+      description: 'The Kafka Connect Worker ID'
+    state:
+      $ref: '#/State'
+      description: 'The state of the connector'
+
+TaskState:
+  type: object
+  required:
+    - id
+    - state
+    - worker_id
+  properties:
+    id:
+      type: integer
+      description: 'The identifier of the Task'
+    state:
+      $ref: '#/State'
+      description: 'The state of the Task'
+    worker_id:
+      type: string
+      description: 'The Kafka Connect Worker ID'
+
+State:
+  type: string
+  description: 'State'
+  enum:
+    - UNASSIGNED
+    - RUNNING
+    - PAUSE
+    - FAILED
+    - DESTROYED

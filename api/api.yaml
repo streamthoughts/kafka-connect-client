@@ -1,0 +1,382 @@
+openapi: 3.0.1
+info:
+  title: Kafka Connect REST API
+  version: ${project.version}
+servers:
+  - url: /
+paths:
+  /:
+    get:
+      description: gets the version of the Connect worker that serves the REST request, the git commit ID of the source code, and the Kafka cluster ID that the worker is connected to.
+      operationId: getConnectVersion
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Root'
+          description: version of Kafka Connect
+      x-accepts: application/json
+      x-contentType: application/json
+      tags:
+        - connect
+
+  /connector-plugins:
+    get:
+      description: get the list of connector plugins installed in the Kafka Connect cluster.
+      operationId: listConnectorPlugins
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                    $ref: './schemas/connector-plugins.yaml#/ConnectorPlugin'
+          description: 'OK'
+      x-accepts: application/json
+      x-contentType: application/json
+      tags:
+        - connect
+
+  /connectors:
+    get:
+      description: gets the list of active connectors
+      operationId: listConnectors
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                default: [ ]
+          description: 'OK'
+      x-accepts: application/json
+      x-contentType: application/json
+      tags:
+        - connect
+
+  /connectors/{name}:
+    get:
+      description: gets information about the connector.
+      operationId: getConnectorInfo
+      parameters:
+        - description: The name of the created connector
+          explode: false
+          in: path
+          name: name
+          required: true
+          schema:
+            type: string
+          style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/connectors-info.yaml#/ConnectorInfo'
+          description: 'OK'
+        "401":
+          content: {}
+          description: Unauthorized
+      security:
+        - basicAuth: []
+      x-accepts: application/json
+      x-contentType: application/json
+      tags:
+        - connect
+
+    delete:
+      description: deletes a connector, halting all tasks and deleting its configuration.
+      operationId: deleteConnector
+      parameters:
+        - description: The name of the connector to delete
+          explode: false
+          in: path
+          name: name
+          required: true
+          schema:
+            type: string
+          style: simple
+      responses:
+        "204":
+          content: {}
+          description: No Content
+        "409":
+          content: {}
+          description: (Conflict) a rebalance is in progress.
+      tags:
+        - connect
+
+  /connectors/{name}/restart:
+    post:
+      description: restarts the connector.
+      operationId: restartConnector
+      parameters:
+        - description: Name of the created connector
+          explode: false
+          in: path
+          name: name
+          required: true
+          schema:
+            type: string
+          style: simple
+      responses:
+        "200":
+          content: {}
+          description: 'OK'
+        "401":
+          content: {}
+          description: Unauthorized
+        "409":
+          content: {}
+          description: (Conflict) a rebalance is in progress.
+      security:
+        - basicAuth: []
+      x-accepts: application/json
+      x-contentType: application/json
+      tags:
+        - connect
+
+  /connectors/{name}/pause:
+    put:
+      description: pauses the connector and its tasks, which stops message processing until the connector is resumed. This call is asynchronous and the tasks will not transition to PAUSED state at the same time.
+      operationId: pauseConnector
+      parameters:
+        - description: The name of the connector to pause
+          explode: false
+          in: path
+          name: name
+          required: true
+          schema:
+            type: string
+          style: simple
+      responses:
+        "202":
+          content: {}
+          description: 'Accepted'
+        "401":
+          content: {}
+          description: Unauthorized
+        "409":
+          content: {}
+          description: (Conflict) a rebalance is in progress.
+      security:
+        - basicAuth: []
+      x-accepts: application/json
+      x-contentType: application/json
+      tags:
+        - connect
+
+  /connectors/{name}/resume:
+    put:
+      description: resumes a paused connector or do nothing if the connector is not paused. This call is asynchronous and the tasks will not transition to RUNNING state at the same time.
+      operationId: resumeConnector
+      parameters:
+        - description: The name of the connector to resume
+          explode: false
+          in: path
+          name: name
+          required: true
+          schema:
+            type: string
+          style: simple
+      responses:
+        "202":
+          content: {}
+          description: 'Accepted'
+        "401":
+          content: {}
+          description: Unauthorized
+        "409":
+          content: {}
+          description: (Conflict) a rebalance is in progress.
+      security:
+        - basicAuth: []
+      x-accepts: application/json
+      x-contentType: application/json
+      tags:
+        - connect
+
+  /connectors/{name}/config:
+    get:
+      description: gets the configuration for the connector.
+      operationId: getConnectorConfig
+      parameters:
+        - description: The name of the connector
+          explode: false
+          in: path
+          name: name
+          required: true
+          schema:
+            type: string
+          style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+          description: 'OK'
+        "401":
+          content: {}
+          description: Unauthorized
+      security:
+        - basicAuth: []
+      x-accepts: application/json
+      x-contentType: application/json
+      tags:
+        - connect
+
+    put:
+      description: creates a new connector using the given configuration, or updates the configuration for an existing connector.
+      operationId: updateOrCreateConnectorConfig
+      parameters:
+        - description: The name of the connector
+          explode: false
+          in: path
+          name: name
+          required: true
+          schema:
+            type: string
+          style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+              description: 'Configuration parameters for the connector. All values should be strings.'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/connectors-info.yaml#/ConnectorInfo'
+          description: 'OK'
+      security:
+        - basicAuth: []
+      x-accepts: application/json
+      x-contentType: application/json
+      tags:
+        - connect
+
+  /connectors/{name}/status:
+    get:
+      description: gets current status of the connector, including whether it is running, failed or paused, which worker it is assigned to, error information if it has failed, and the state of all its tasks.
+      operationId: getConnectorStatus
+      parameters:
+        - description: The name of the connector
+          explode: false
+          in: path
+          name: name
+          required: true
+          schema:
+            type: string
+          style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/connectors-status.yaml#/ConnectorStatus'
+          description: 'OK'
+        "401":
+          content: {}
+          description: Unauthorized
+      security:
+        - basicAuth: []
+      x-accepts: application/json
+      x-contentType: application/json
+      tags:
+        - connect
+
+  /connectors/{name}/tasks/{taskId}:
+    get:
+      description: gets a task’s status.
+      operationId: getConnectorTaskStatus
+      parameters:
+        - description: The name of the connector?=.
+          explode: false
+          in: path
+          name: name
+          required: true
+          schema:
+            type: string
+          style: simple
+        - description: The ID of the task to restart.
+          explode: false
+          in: path
+          name: taskId
+          required: true
+          schema:
+            type: integer
+          style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/connectors-status.yaml#/TaskState'
+          description: 'OK'
+      security:
+        - basicAuth: []
+      x-accepts: application/json
+      x-contentType: application/json
+      tags:
+        - connect
+
+  /connectors/{name}/tasks/{taskId}/restart:
+    put:
+      description: restarts an individual task.
+      operationId: restartConnectorTask
+      parameters:
+        - description: The name of the connector?=.
+          explode: false
+          in: path
+          name: name
+          required: true
+          schema:
+            type: string
+          style: simple
+        - description: The ID of the task to restart.
+          explode: false
+          in: path
+          name: taskId
+          required: true
+          schema:
+            type: integer
+          style: simple
+      responses:
+        "202":
+          content: {}
+          description: 'Accepted'
+        "401":
+          content: {}
+          description: Unauthorized
+      security:
+        - basicAuth: []
+      x-accepts: application/json
+      x-contentType: application/json
+      tags:
+        - connect
+
+components:
+  schemas:
+    Root:
+      properties:
+        version:
+          description: Connect worker version
+          type: string
+        commit:
+          description: Git commit ID
+          type: string
+        kafka_cluster_id:
+          description: Kafka cluster ID
+          type: string
