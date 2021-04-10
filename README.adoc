@@ -1,4 +1,14 @@
 = Java client library for https://kafka.apache.org/documentation/#connect[Kafka Connect] REST Interface
+:toc:
+:toc-placement!:
+
+image:https://img.shields.io/badge/License-Apache%202.0-blue.svg[https://github.com/streamthoughts/kafka-connect-client/blob/master/LICENSE]
+image:https://img.shields.io/github/v/release/streamthoughts/kafka-connect-client[GitHub release (latest by date)]
+image:https://img.shields.io/github/issues-raw/streamthoughts/kafka-connect-client[GitHub issues]
+image:https://img.shields.io/github/workflow/status/streamthoughts/kafka-connect-client/Java%20CI%20with%20Maven[GitHub Workflow Status]
+image:https://img.shields.io/github/stars/streamthoughts/kafka-connect-client?style=social[GitHub Repo stars]
+
+toc::[]
 
 == Build the project
 

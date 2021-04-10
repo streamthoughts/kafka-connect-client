@@ -23,123 +23,120 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /** TaskState */
-@javax.annotation.Generated(
-        value = "org.openapitools.codegen.languages.JavaClientCodegen",
-        date = "2021-04-10T15:10:20.847879+02:00[Europe/Paris]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class TaskState {
-    public static final String SERIALIZED_NAME_ID = "id";
+  public static final String SERIALIZED_NAME_ID = "id";
 
-    @SerializedName(SERIALIZED_NAME_ID)
-    private Integer id;
+  @SerializedName(SERIALIZED_NAME_ID)
+  private Integer id;
 
-    public static final String SERIALIZED_NAME_STATE = "state";
+  public static final String SERIALIZED_NAME_STATE = "state";
 
-    @SerializedName(SERIALIZED_NAME_STATE)
-    private State state;
+  @SerializedName(SERIALIZED_NAME_STATE)
+  private State state;
 
-    public static final String SERIALIZED_NAME_WORKER_ID = "worker_id";
+  public static final String SERIALIZED_NAME_WORKER_ID = "worker_id";
 
-    @SerializedName(SERIALIZED_NAME_WORKER_ID)
-    private String workerId;
+  @SerializedName(SERIALIZED_NAME_WORKER_ID)
+  private String workerId;
 
-    public TaskState id(Integer id) {
+  public TaskState id(Integer id) {
 
-        this.id = id;
-        return this;
+    this.id = id;
+    return this;
+  }
+
+  /**
+   * The identifier of the Task
+   *
+   * @return id
+   */
+  @ApiModelProperty(required = true, value = "The identifier of the Task")
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+  public TaskState state(State state) {
+
+    this.state = state;
+    return this;
+  }
+
+  /**
+   * Get state
+   *
+   * @return state
+   */
+  @ApiModelProperty(required = true, value = "")
+  public State getState() {
+    return state;
+  }
+
+  public void setState(State state) {
+    this.state = state;
+  }
+
+  public TaskState workerId(String workerId) {
+
+    this.workerId = workerId;
+    return this;
+  }
+
+  /**
+   * The Kafka Connect Worker ID
+   *
+   * @return workerId
+   */
+  @ApiModelProperty(required = true, value = "The Kafka Connect Worker ID")
+  public String getWorkerId() {
+    return workerId;
+  }
+
+  public void setWorkerId(String workerId) {
+    this.workerId = workerId;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
     }
-
-    /**
-     * The identifier of the Task
-     *
-     * @return id
-     */
-    @ApiModelProperty(required = true, value = "The identifier of the Task")
-    public Integer getId() {
-        return id;
+    if (o == null || getClass() != o.getClass()) {
+      return false;
     }
+    TaskState taskState = (TaskState) o;
+    return Objects.equals(this.id, taskState.id)
+        && Objects.equals(this.state, taskState.state)
+        && Objects.equals(this.workerId, taskState.workerId);
+  }
 
-    public void setId(Integer id) {
-        this.id = id;
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, state, workerId);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class TaskState {\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    state: ").append(toIndentedString(state)).append("\n");
+    sb.append("    workerId: ").append(toIndentedString(workerId)).append("\n");
+    sb.append("}");
+    return sb.toString();
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return "null";
     }
-
-    public TaskState state(State state) {
-
-        this.state = state;
-        return this;
-    }
-
-    /**
-     * Get state
-     *
-     * @return state
-     */
-    @ApiModelProperty(required = true, value = "")
-    public State getState() {
-        return state;
-    }
-
-    public void setState(State state) {
-        this.state = state;
-    }
-
-    public TaskState workerId(String workerId) {
-
-        this.workerId = workerId;
-        return this;
-    }
-
-    /**
-     * The Kafka Connect Worker ID
-     *
-     * @return workerId
-     */
-    @ApiModelProperty(required = true, value = "The Kafka Connect Worker ID")
-    public String getWorkerId() {
-        return workerId;
-    }
-
-    public void setWorkerId(String workerId) {
-        this.workerId = workerId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        TaskState taskState = (TaskState) o;
-        return Objects.equals(this.id, taskState.id)
-                && Objects.equals(this.state, taskState.state)
-                && Objects.equals(this.workerId, taskState.workerId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, state, workerId);
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("class TaskState {\n");
-        sb.append("    id: ").append(toIndentedString(id)).append("\n");
-        sb.append("    state: ").append(toIndentedString(state)).append("\n");
-        sb.append("    workerId: ").append(toIndentedString(workerId)).append("\n");
-        sb.append("}");
-        return sb.toString();
-    }
-
-    /**
-     * Convert the given object to string with each line indented by 4 spaces (except the first
-     * line).
-     */
-    private String toIndentedString(Object o) {
-        if (o == null) {
-            return "null";
-        }
-        return o.toString().replace("\n", "\n    ");
-    }
+    return o.toString().replace("\n", "\n    ");
+  }
 }

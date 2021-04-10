@@ -27,50 +27,50 @@ import java.io.IOException;
 /** State */
 @JsonAdapter(State.Adapter.class)
 public enum State {
-    UNASSIGNED("UNASSIGNED"),
+  UNASSIGNED("UNASSIGNED"),
 
-    RUNNING("RUNNING"),
+  RUNNING("RUNNING"),
 
-    PAUSE("PAUSE"),
+  PAUSE("PAUSE"),
 
-    FAILED("FAILED"),
+  FAILED("FAILED"),
 
-    DESTROYED("DESTROYED");
+  DESTROYED("DESTROYED");
 
-    private String value;
+  private String value;
 
-    State(String value) {
-        this.value = value;
+  State(String value) {
+    this.value = value;
+  }
+
+  public String getValue() {
+    return value;
+  }
+
+  @Override
+  public String toString() {
+    return String.valueOf(value);
+  }
+
+  public static State fromValue(String value) {
+    for (State b : State.values()) {
+      if (b.value.equals(value)) {
+        return b;
+      }
     }
+    throw new IllegalArgumentException("Unexpected value '" + value + "'");
+  }
 
-    public String getValue() {
-        return value;
+  public static class Adapter extends TypeAdapter<State> {
+    @Override
+    public void write(final JsonWriter jsonWriter, final State enumeration) throws IOException {
+      jsonWriter.value(enumeration.getValue());
     }
 
     @Override
-    public String toString() {
-        return String.valueOf(value);
+    public State read(final JsonReader jsonReader) throws IOException {
+      String value = jsonReader.nextString();
+      return State.fromValue(value);
     }
-
-    public static State fromValue(String value) {
-        for (State b : State.values()) {
-            if (b.value.equals(value)) {
-                return b;
-            }
-        }
-        throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-
-    public static class Adapter extends TypeAdapter<State> {
-        @Override
-        public void write(final JsonWriter jsonWriter, final State enumeration) throws IOException {
-            jsonWriter.value(enumeration.getValue());
-        }
-
-        @Override
-        public State read(final JsonReader jsonReader) throws IOException {
-            String value = jsonReader.nextString();
-            return State.fromValue(value);
-        }
-    }
+  }
 }

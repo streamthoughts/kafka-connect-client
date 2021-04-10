@@ -83,7 +83,7 @@ No authorization required
 
 <a name="getConnectVersion"></a>
 # **getConnectVersion**
-> Root getConnectVersion()
+> Version getConnectVersion()
 
 
 
@@ -105,7 +105,7 @@ public class Example {
 
     ConnectApi apiInstance = new ConnectApi(defaultClient);
     try {
-      Root result = apiInstance.getConnectVersion();
+      Version result = apiInstance.getConnectVersion();
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ConnectApi#getConnectVersion");
@@ -123,7 +123,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**Root**](Root.md)
+[**Version**](Version.md)
 
 ### Authorization
 

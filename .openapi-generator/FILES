@@ -3,10 +3,10 @@ docs/ConnectApi.md
 docs/ConnectorInfo.md
 docs/ConnectorPlugin.md
 docs/ConnectorStatus.md
-docs/Root.md
 docs/State.md
 docs/Task.md
 docs/TaskState.md
+docs/Version.md
 src/main/java/io/streamthoughts/kafka/connect/client/openapi/ApiCallback.java
 src/main/java/io/streamthoughts/kafka/connect/client/openapi/ApiClient.java
 src/main/java/io/streamthoughts/kafka/connect/client/openapi/ApiException.java
@@ -28,7 +28,7 @@ src/main/java/io/streamthoughts/kafka/connect/client/openapi/auth/HttpBearerAuth
 src/main/java/io/streamthoughts/kafka/connect/client/openapi/models/ConnectorInfo.java
 src/main/java/io/streamthoughts/kafka/connect/client/openapi/models/ConnectorPlugin.java
 src/main/java/io/streamthoughts/kafka/connect/client/openapi/models/ConnectorStatus.java
-src/main/java/io/streamthoughts/kafka/connect/client/openapi/models/Root.java
 src/main/java/io/streamthoughts/kafka/connect/client/openapi/models/State.java
 src/main/java/io/streamthoughts/kafka/connect/client/openapi/models/Task.java
 src/main/java/io/streamthoughts/kafka/connect/client/openapi/models/TaskState.java
+src/main/java/io/streamthoughts/kafka/connect/client/openapi/models/Version.java

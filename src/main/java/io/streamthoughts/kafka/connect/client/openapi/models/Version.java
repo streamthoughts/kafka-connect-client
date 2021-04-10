@@ -22,56 +22,37 @@ import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
-/** ConnectorPlugin */
+/** Version */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class ConnectorPlugin {
-  public static final String SERIALIZED_NAME_PROPERTY_CLASS = "class";
-
-  @SerializedName(SERIALIZED_NAME_PROPERTY_CLASS)
-  private String propertyClass;
-
+public class Version {
   public static final String SERIALIZED_NAME_VERSION = "version";
 
   @SerializedName(SERIALIZED_NAME_VERSION)
   private String version;
 
-  public static final String SERIALIZED_NAME_TYPE = "type";
+  public static final String SERIALIZED_NAME_COMMIT = "commit";
 
-  @SerializedName(SERIALIZED_NAME_TYPE)
-  private String type;
+  @SerializedName(SERIALIZED_NAME_COMMIT)
+  private String commit;
 
-  public ConnectorPlugin propertyClass(String propertyClass) {
+  public static final String SERIALIZED_NAME_KAFKA_CLUSTER_ID = "kafka_cluster_id";
 
-    this.propertyClass = propertyClass;
-    return this;
-  }
+  @SerializedName(SERIALIZED_NAME_KAFKA_CLUSTER_ID)
+  private String kafkaClusterId;
 
-  /**
-   * The connector class name.
-   *
-   * @return propertyClass
-   */
-  @ApiModelProperty(required = true, value = "The connector class name.")
-  public String getPropertyClass() {
-    return propertyClass;
-  }
-
-  public void setPropertyClass(String propertyClass) {
-    this.propertyClass = propertyClass;
-  }
-
-  public ConnectorPlugin version(String version) {
+  public Version version(String version) {
 
     this.version = version;
     return this;
   }
 
   /**
-   * The connector version.
+   * Connect worker version
    *
    * @return version
    */
-  @ApiModelProperty(required = true, value = "The connector version.")
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Connect worker version")
   public String getVersion() {
     return version;
   }
@@ -80,24 +61,46 @@ public class ConnectorPlugin {
     this.version = version;
   }
 
-  public ConnectorPlugin type(String type) {
+  public Version commit(String commit) {
 
-    this.type = type;
+    this.commit = commit;
     return this;
   }
 
   /**
-   * The connector type.
+   * Git commit ID
    *
-   * @return type
+   * @return commit
    */
-  @ApiModelProperty(required = true, value = "The connector type.")
-  public String getType() {
-    return type;
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Git commit ID")
+  public String getCommit() {
+    return commit;
   }
 
-  public void setType(String type) {
-    this.type = type;
+  public void setCommit(String commit) {
+    this.commit = commit;
+  }
+
+  public Version kafkaClusterId(String kafkaClusterId) {
+
+    this.kafkaClusterId = kafkaClusterId;
+    return this;
+  }
+
+  /**
+   * Kafka cluster ID
+   *
+   * @return kafkaClusterId
+   */
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Kafka cluster ID")
+  public String getKafkaClusterId() {
+    return kafkaClusterId;
+  }
+
+  public void setKafkaClusterId(String kafkaClusterId) {
+    this.kafkaClusterId = kafkaClusterId;
   }
 
   @Override
@@ -108,24 +111,24 @@ public class ConnectorPlugin {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ConnectorPlugin connectorPlugin = (ConnectorPlugin) o;
-    return Objects.equals(this.propertyClass, connectorPlugin.propertyClass)
-        && Objects.equals(this.version, connectorPlugin.version)
-        && Objects.equals(this.type, connectorPlugin.type);
+    Version version = (Version) o;
+    return Objects.equals(this.version, version.version)
+        && Objects.equals(this.commit, version.commit)
+        && Objects.equals(this.kafkaClusterId, version.kafkaClusterId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(propertyClass, version, type);
+    return Objects.hash(version, commit, kafkaClusterId);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ConnectorPlugin {\n");
-    sb.append("    propertyClass: ").append(toIndentedString(propertyClass)).append("\n");
+    sb.append("class Version {\n");
     sb.append("    version: ").append(toIndentedString(version)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    commit: ").append(toIndentedString(commit)).append("\n");
+    sb.append("    kafkaClusterId: ").append(toIndentedString(kafkaClusterId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

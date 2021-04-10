@@ -16,7 +16,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Root'
+                $ref: '#/components/schemas/Version'
           description: version of Kafka Connect
       tags:
       - connect
@@ -387,7 +387,7 @@ paths:
       x-contentType: application/json
 components:
   schemas:
-    Root:
+    Version:
       example:
         kafka_cluster_id: kafka_cluster_id
         commit: commit
