@@ -19,15 +19,34 @@ toc::[]
 
 == Code Examples
 
+Listing all active connectors::
 [source, java]
 ----
 ApiClient client = Config.defaultClient();
 Configuration.setDefaultApiClient(client);
 
-ConnectRestClient client = new ConnectRestClient();
+ConnectApi api new ConnectApi();
 
-client.api().listConnectors();
+final List<String> connectors = api.listConnectors();
+----
 
+Deploying a new connector::
+[source, java]
+----
+ApiClient apiClient = Config.defaultClient();
+Configuration.setDefaultApiClient(apiClient);
+
+KafkaConnectRestClient client = new KafkaConnectRestClient();
+
+CompletableFuture<ConnectorInfo> future = client
+  .updateOrCreateConnectorConfig(
+      "filestream-source",
+      ConnectorConfig.builder()
+          .withConnectorClass("FileStreamSource")
+          .withTasksMax(1)
+          .withTopic("connect-test")
+          .withConnectorProp("file", "/tmp/test.txt")
+  );
 ----
 
 == Licence

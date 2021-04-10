@@ -37,30 +37,30 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The {@code ConnectRestClient} can be used for building a new {@link ConnectApi} for Kafka
- * Connect.
+ * The {@code KafkaConnectRestClient} can be used
+ * for building a new {@link ConnectApi} for Kafka Connect.
  */
-public class ConnectRestClient {
+public class KafkaConnectRestClient {
 
-  private static final Logger LOG = LoggerFactory.getLogger(ConnectRestClient.class);
+  private static final Logger LOG = LoggerFactory.getLogger(KafkaConnectRestClient.class);
 
   private final ConnectApi api;
 
   /**
-   * Creates a new {@link ConnectRestClient} instance using default ApiClient.
+   * Creates a new {@link KafkaConnectRestClient} instance using default ApiClient.
    *
-   * @see Configuration#getDefaultApiClient().
+   * @see io.streamthoughts.kafka.connect.client.openapi.Configuration#getDefaultApiClient().
    */
-  public ConnectRestClient() {
+  public KafkaConnectRestClient() {
     this.api = new ConnectApi();
   }
 
   /**
-   * Creates a new {@link ConnectRestClient} instance using the specified {@link ApiClient}.
+   * Creates a new {@link KafkaConnectRestClient} instance using the specified {@link ApiClient}.
    *
    * @param apiClient the {@link ApiClient}.
    */
-  public ConnectRestClient(final ApiClient apiClient) {
+  public KafkaConnectRestClient(final ApiClient apiClient) {
     this.api = new ConnectApi(Objects.requireNonNull(apiClient, "apiClient should not be null"));
   }
 

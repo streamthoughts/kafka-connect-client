@@ -27,6 +27,7 @@ import io.streamthoughts.kafka.connect.client.openapi.models.ConnectorStatus;
 import io.streamthoughts.kafka.connect.client.openapi.models.Version;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,28 +37,28 @@ public class KafkaConnectClientIntegrationTest extends AbstractKafkaConnectTest 
 
   public static final String TEST_CONNECTOR_NAME = "test-connector";
 
-  private final ConnectRestClient client;
+  private final KafkaConnectRestClient client;
 
   private final AtomicBoolean createConnectorBeforeTest = new AtomicBoolean(true);
 
   public KafkaConnectClientIntegrationTest() {
     ApiClient client = Config.fromUrl(getConnectString());
     Configuration.setDefaultApiClient(client);
-    this.client = new ConnectRestClient();
+    this.client = new KafkaConnectRestClient();
   }
 
   @BeforeEach
   public void setUp() throws Exception {
     if (createConnectorBeforeTest.compareAndSet(true, false)) {
-      client
-          .updateOrCreateConnectorConfig(
-              TEST_CONNECTOR_NAME,
-              ConnectorConfig.builder()
-                  .withConnectorClass("FileStreamSource")
-                  .withTasksMax(1)
-                  .withTopic("connect-test")
-                  .withConnectorProp("file", "/tmp/test.txt"))
-          .get();
+      final CompletableFuture<ConnectorInfo> future = client
+              .updateOrCreateConnectorConfig(
+                      TEST_CONNECTOR_NAME,
+                      ConnectorConfig.builder()
+                              .withConnectorClass("FileStreamSource")
+                              .withTasksMax(1)
+                              .withTopic("connect-test")
+                              .withConnectorProp("file", "/tmp/test.txt"));
+      future.get();
     }
   }
 
