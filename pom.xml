@@ -24,7 +24,7 @@ limitations under the License.
 
     <groupId>io.streamthoughts</groupId>
     <artifactId>kafka-connect-client</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
 
     <name>Kafka Connect Java Client</name>
     <description>Java client library for Apache Kafka Connect REST Interface</description>
@@ -41,7 +41,7 @@ limitations under the License.
         <url>https://www.streamthoughts.io</url>
     </organization>
 
-    <url>https://github.com/streamthoughts/azkarra-streams</url>
+    <url>https://github.com/streamthoughts/kafka-connect-client</url>
 
     <licenses>
         <license>
@@ -389,7 +389,7 @@ limitations under the License.
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.2.1</version>
+                        <version>3.2.0</version>
                         <configuration>
                             <doclint>none</doclint><!-- Turnoff all checks -->
                         </configuration>
