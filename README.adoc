@@ -11,14 +11,32 @@ image:https://img.shields.io/maven-central/v/io.streamthoughts/kafka-connect-cli
 
 toc::[]
 
-== Build the project
+== 🚀 Quickstart
+
+This project is available in Maven Central. You can add Kafka Connect Client to the dependency of the `pom.xml` of your project.
+
+[source, xml]
+----
+<dependency>
+  <groupId>io.streamthoughts</groupId>
+  <artifactId>kafka-connect-client</artifactId>
+  <version>0.1.0</version>
+</dependency>
+----
+
+=== Build the project
+**Prerequisites for building the project:**
+* Git
+* Java 11
 
 [source, bash]
 ----
+$ git clone https://github.com/streamthoughts/kafka-connect-client.git
+$ cd kafka-connect-client
 ./mvnw -B clean verify
 ----
 
-== Code Examples
+=== Code Examples
 
 Listing all active connectors::
 [source, java]
@@ -59,6 +77,18 @@ Configuration.setDefaultApiClient(apiClient);
 KafkaConnectRestClient client = new KafkaConnectRestClient();
 List<TaskState> failedTasks = client.listTasksWithState(state -> state.equals(State.FAILED)).get();
 ----
+
+== 🙏 Show your support
+
+Do you think this project can help you manage Kafka Connect?
+Please 🌟 this repository to support us!
+
+== 💡Contributions
+
+Any feedback, bug reports and PRs are greatly appreciated!
+
+- Source Code: [https://github.com/streamthoughts/azkarra-streams](https://github.com/streamthoughts/kafka-connect-client)
+- Issue Tracker: [https://github.com/streamthoughts/azkarra-streams/issues](https://github.com/streamthoughts/kafka-connect-client/issues)
 
 == Licence
 
