@@ -27,7 +27,8 @@ import io.streamthoughts.kafka.connect.client.openapi.Configuration;
 import io.streamthoughts.kafka.connect.client.openapi.Pair;
 import io.streamthoughts.kafka.connect.client.openapi.models.ConnectorInfo;
 import io.streamthoughts.kafka.connect.client.openapi.models.ConnectorPlugin;
-import io.streamthoughts.kafka.connect.client.openapi.models.ConnectorStatus;
+import io.streamthoughts.kafka.connect.client.openapi.models.ConnectorStateInfo;
+import io.streamthoughts.kafka.connect.client.openapi.models.TaskInfo;
 import io.streamthoughts.kafka.connect.client.openapi.models.TaskState;
 import io.streamthoughts.kafka.connect.client.openapi.models.Version;
 import java.lang.reflect.Type;
@@ -560,7 +561,7 @@ public class ConnectApi {
     return localVarCall;
   }
   /**
-   * Build call for getConnectorStatus
+   * Build call for getConnectorStateInfo
    *
    * @param name The name of the connector (required)
    * @param _callback Callback for upload/download progress
@@ -573,7 +574,7 @@ public class ConnectApi {
    * <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
    * </table>
    */
-  public okhttp3.Call getConnectorStatusCall(String name, final ApiCallback _callback)
+  public okhttp3.Call getConnectorStateInfoCall(String name, final ApiCallback _callback)
       throws ApiException {
     Object localVarPostBody = null;
 
@@ -615,16 +616,16 @@ public class ConnectApi {
   }
 
   @SuppressWarnings("rawtypes")
-  private okhttp3.Call getConnectorStatusValidateBeforeCall(
+  private okhttp3.Call getConnectorStateInfoValidateBeforeCall(
       String name, final ApiCallback _callback) throws ApiException {
 
     // verify the required parameter 'name' is set
     if (name == null) {
       throw new ApiException(
-          "Missing the required parameter 'name' when calling getConnectorStatus(Async)");
+          "Missing the required parameter 'name' when calling getConnectorStateInfo(Async)");
     }
 
-    okhttp3.Call localVarCall = getConnectorStatusCall(name, _callback);
+    okhttp3.Call localVarCall = getConnectorStateInfoCall(name, _callback);
     return localVarCall;
   }
 
@@ -633,7 +634,7 @@ public class ConnectApi {
    * worker it is assigned to, error information if it has failed, and the state of all its tasks.
    *
    * @param name The name of the connector (required)
-   * @return ConnectorStatus
+   * @return ConnectorStateInfo
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -643,8 +644,8 @@ public class ConnectApi {
    * <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
    * </table>
    */
-  public ConnectorStatus getConnectorStatus(String name) throws ApiException {
-    ApiResponse<ConnectorStatus> localVarResp = getConnectorStatusWithHttpInfo(name);
+  public ConnectorStateInfo getConnectorStateInfo(String name) throws ApiException {
+    ApiResponse<ConnectorStateInfo> localVarResp = getConnectorStateInfoWithHttpInfo(name);
     return localVarResp.getData();
   }
 
@@ -653,7 +654,7 @@ public class ConnectApi {
    * worker it is assigned to, error information if it has failed, and the state of all its tasks.
    *
    * @param name The name of the connector (required)
-   * @return ApiResponse&lt;ConnectorStatus&gt;
+   * @return ApiResponse&lt;ConnectorStateInfo&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
    *     response body
    * @http.response.details
@@ -663,10 +664,10 @@ public class ConnectApi {
    * <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
    * </table>
    */
-  public ApiResponse<ConnectorStatus> getConnectorStatusWithHttpInfo(String name)
+  public ApiResponse<ConnectorStateInfo> getConnectorStateInfoWithHttpInfo(String name)
       throws ApiException {
-    okhttp3.Call localVarCall = getConnectorStatusValidateBeforeCall(name, null);
-    Type localVarReturnType = new TypeToken<ConnectorStatus>() {}.getType();
+    okhttp3.Call localVarCall = getConnectorStateInfoValidateBeforeCall(name, null);
+    Type localVarReturnType = new TypeToken<ConnectorStateInfo>() {}.getType();
     return localVarApiClient.execute(localVarCall, localVarReturnType);
   }
 
@@ -686,18 +687,145 @@ public class ConnectApi {
    * <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
    * </table>
    */
-  public okhttp3.Call getConnectorStatusAsync(
-      String name, final ApiCallback<ConnectorStatus> _callback) throws ApiException {
+  public okhttp3.Call getConnectorStateInfoAsync(
+      String name, final ApiCallback<ConnectorStateInfo> _callback) throws ApiException {
 
-    okhttp3.Call localVarCall = getConnectorStatusValidateBeforeCall(name, _callback);
-    Type localVarReturnType = new TypeToken<ConnectorStatus>() {}.getType();
+    okhttp3.Call localVarCall = getConnectorStateInfoValidateBeforeCall(name, _callback);
+    Type localVarReturnType = new TypeToken<ConnectorStateInfo>() {}.getType();
+    localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+    return localVarCall;
+  }
+  /**
+   * Build call for getConnectorTaskInfos
+   *
+   * @param name The name of the connector. (required)
+   * @param _callback Callback for upload/download progress
+   * @return Call to execute
+   * @throws ApiException If fail to serialize the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call getConnectorTaskInfosCall(String name, final ApiCallback _callback)
+      throws ApiException {
+    Object localVarPostBody = null;
+
+    // create path and map variables
+    String localVarPath =
+        "/connectors/{name}/tasks"
+            .replaceAll("\\{" + "name" + "\\}", localVarApiClient.escapeString(name.toString()));
+
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, String> localVarCookieParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    final String[] localVarAccepts = {"application/json"};
+    final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+    if (localVarAccept != null) {
+      localVarHeaderParams.put("Accept", localVarAccept);
+    }
+
+    final String[] localVarContentTypes = {};
+
+    final String localVarContentType =
+        localVarApiClient.selectHeaderContentType(localVarContentTypes);
+    localVarHeaderParams.put("Content-Type", localVarContentType);
+
+    String[] localVarAuthNames = new String[] {};
+    return localVarApiClient.buildCall(
+        localVarPath,
+        "GET",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAuthNames,
+        _callback);
+  }
+
+  @SuppressWarnings("rawtypes")
+  private okhttp3.Call getConnectorTaskInfosValidateBeforeCall(
+      String name, final ApiCallback _callback) throws ApiException {
+
+    // verify the required parameter 'name' is set
+    if (name == null) {
+      throw new ApiException(
+          "Missing the required parameter 'name' when calling getConnectorTaskInfos(Async)");
+    }
+
+    okhttp3.Call localVarCall = getConnectorTaskInfosCall(name, _callback);
+    return localVarCall;
+  }
+
+  /**
+   * gets a task’s status.
+   *
+   * @param name The name of the connector. (required)
+   * @return List&lt;TaskInfo&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * </table>
+   */
+  public List<TaskInfo> getConnectorTaskInfos(String name) throws ApiException {
+    ApiResponse<List<TaskInfo>> localVarResp = getConnectorTaskInfosWithHttpInfo(name);
+    return localVarResp.getData();
+  }
+
+  /**
+   * gets a task’s status.
+   *
+   * @param name The name of the connector. (required)
+   * @return ApiResponse&lt;List&lt;TaskInfo&gt;&gt;
+   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
+   *     response body
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * </table>
+   */
+  public ApiResponse<List<TaskInfo>> getConnectorTaskInfosWithHttpInfo(String name)
+      throws ApiException {
+    okhttp3.Call localVarCall = getConnectorTaskInfosValidateBeforeCall(name, null);
+    Type localVarReturnType = new TypeToken<List<TaskInfo>>() {}.getType();
+    return localVarApiClient.execute(localVarCall, localVarReturnType);
+  }
+
+  /**
+   * (asynchronously) gets a task’s status.
+   *
+   * @param name The name of the connector. (required)
+   * @param _callback The callback to be executed when the API call finishes
+   * @return The request call
+   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @http.response.details
+   *     <table summary="Response Details" border="1">
+   * <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+   * <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+   * </table>
+   */
+  public okhttp3.Call getConnectorTaskInfosAsync(
+      String name, final ApiCallback<List<TaskInfo>> _callback) throws ApiException {
+
+    okhttp3.Call localVarCall = getConnectorTaskInfosValidateBeforeCall(name, _callback);
+    Type localVarReturnType = new TypeToken<List<TaskInfo>>() {}.getType();
     localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
     return localVarCall;
   }
   /**
    * Build call for getConnectorTaskStatus
    *
-   * @param name The name of the connector?&#x3D;. (required)
+   * @param name The name of the connector. (required)
    * @param taskId The ID of the task to restart. (required)
    * @param _callback Callback for upload/download progress
    * @return Call to execute
@@ -714,7 +842,7 @@ public class ConnectApi {
 
     // create path and map variables
     String localVarPath =
-        "/connectors/{name}/tasks/{taskId}"
+        "/connectors/{name}/tasks/{taskId}/status"
             .replaceAll("\\{" + "name" + "\\}", localVarApiClient.escapeString(name.toString()))
             .replaceAll(
                 "\\{" + "taskId" + "\\}", localVarApiClient.escapeString(taskId.toString()));
@@ -772,9 +900,9 @@ public class ConnectApi {
   }
 
   /**
-   * gets a task’s status.
+   * gets a task&#39;s status.
    *
-   * @param name The name of the connector?&#x3D;. (required)
+   * @param name The name of the connector. (required)
    * @param taskId The ID of the task to restart. (required)
    * @return TaskState
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
@@ -791,9 +919,9 @@ public class ConnectApi {
   }
 
   /**
-   * gets a task’s status.
+   * gets a task&#39;s status.
    *
-   * @param name The name of the connector?&#x3D;. (required)
+   * @param name The name of the connector. (required)
    * @param taskId The ID of the task to restart. (required)
    * @return ApiResponse&lt;TaskState&gt;
    * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
@@ -812,9 +940,9 @@ public class ConnectApi {
   }
 
   /**
-   * (asynchronously) gets a task’s status.
+   * (asynchronously) gets a task&#39;s status.
    *
-   * @param name The name of the connector?&#x3D;. (required)
+   * @param name The name of the connector. (required)
    * @param taskId The ID of the task to restart. (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call

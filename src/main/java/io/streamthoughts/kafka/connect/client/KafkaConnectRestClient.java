@@ -24,7 +24,9 @@ import io.streamthoughts.kafka.connect.client.openapi.ApiException;
 import io.streamthoughts.kafka.connect.client.openapi.apis.ConnectApi;
 import io.streamthoughts.kafka.connect.client.openapi.models.ConnectorInfo;
 import io.streamthoughts.kafka.connect.client.openapi.models.ConnectorPlugin;
-import io.streamthoughts.kafka.connect.client.openapi.models.ConnectorStatus;
+import io.streamthoughts.kafka.connect.client.openapi.models.ConnectorStateInfo;
+import io.streamthoughts.kafka.connect.client.openapi.models.State;
+import io.streamthoughts.kafka.connect.client.openapi.models.TaskInfo;
 import io.streamthoughts.kafka.connect.client.openapi.models.TaskState;
 import io.streamthoughts.kafka.connect.client.openapi.models.Version;
 import java.util.List;
@@ -32,13 +34,16 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.TestOnly;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The {@code KafkaConnectRestClient} can be used
- * for building a new {@link ConnectApi} for Kafka Connect.
+ * The {@code KafkaConnectRestClient} can be used for building a new {@link ConnectApi} for Kafka
+ * Connect.
  */
 public class KafkaConnectRestClient {
 
@@ -61,7 +66,12 @@ public class KafkaConnectRestClient {
    * @param apiClient the {@link ApiClient}.
    */
   public KafkaConnectRestClient(final ApiClient apiClient) {
-    this.api = new ConnectApi(Objects.requireNonNull(apiClient, "apiClient should not be null"));
+    this(new ConnectApi(Objects.requireNonNull(apiClient, "apiClient should not be null")));
+  }
+
+  @TestOnly
+  KafkaConnectRestClient(final ConnectApi api) {
+    this.api = Objects.requireNonNull(api, "api should not be nul");
   }
 
   /** @return the {@link ConnectApi} instance. */
@@ -94,9 +104,14 @@ public class KafkaConnectRestClient {
     return execute((callback) -> api.getConnectorInfoAsync(connectorName, callback));
   }
 
-  /** @see ConnectApi#getConnectorStatus(String). */
-  public CompletableFuture<ConnectorStatus> getConnectorStatus(final String connectorName) {
-    return execute((callback) -> api.getConnectorStatusAsync(connectorName, callback));
+  /** @see ConnectApi#getConnectorStateInfo(String). */
+  public CompletableFuture<ConnectorStateInfo> getConnectorStateInfo(final String connectorName) {
+    return execute((callback) -> api.getConnectorStateInfoAsync(connectorName, callback));
+  }
+
+  /** @see ConnectApi#getConnectorTaskInfos(String). */
+  public CompletableFuture<List<TaskInfo>> getConnectorTaskInfos(final String connectorName) {
+    return execute((callback) -> api.getConnectorTaskInfosAsync(connectorName, callback));
   }
 
   /** @see ConnectApi#deleteConnector(String). */
@@ -140,6 +155,53 @@ public class KafkaConnectRestClient {
     return execute((callback) -> api.restartConnectorTaskAsync(connectorName, taskId, callback));
   }
 
+  /**
+   * Helper method to list all Tasks wmatching the given {@link State} predicate.
+   *
+   * @return a {@link CompletableFuture} of the list of {@link TaskState}.
+   */
+  public CompletableFuture<List<TaskState>> listTasksWithState(final Predicate<State> predicate) {
+    Objects.requireNonNull(predicate, "predicate should not be null");
+    final List<String> connectors = api.listConnectors();
+    return allOf(
+            connectors.parallelStream()
+                .map(
+                    connector ->
+                        getConnectorStateInfo(connector)
+                            .thenApply(task -> filterTasks(task, predicate)))
+                .collect(Collectors.toList()))
+        .thenApply(it -> it.stream().flatMap(List::stream).collect(Collectors.toList()));
+  }
+
+  @NotNull
+  private List<TaskState> filterTasks(
+      final ConnectorStateInfo connectorStateInfo, final Predicate<State> predicate) {
+    return connectorStateInfo.getTasks().stream()
+        .filter(task -> predicate.test(task.getState()))
+        .collect(Collectors.toList());
+  }
+
+  /**
+   * Helper method to list all Connectors matching the given {@link State} predicate.
+   *
+   * @return a {@link CompletableFuture} of the list of {@link ConnectorStateInfo}.
+   */
+  public CompletableFuture<List<ConnectorStateInfo>> listConnectorsWithState(
+      final Predicate<State> predicate) {
+    Objects.requireNonNull(predicate, "predicate should not be null");
+    final CompletableFuture<List<ConnectorStateInfo>> allOf =
+        allOf(
+            api.listConnectors().parallelStream()
+                .map(this::getConnectorStateInfo)
+                .collect(Collectors.toList()));
+
+    return allOf.thenApply(
+        it ->
+            it.stream()
+                .filter(state -> predicate.test(state.getConnector().getState()))
+                .collect(Collectors.toList()));
+  }
+
   private static <T> CompletableFuture<T> execute(final Function<ApiCallback<T>, ?> function) {
     final CompletableFuture<T> future = new CompletableFuture<>();
     try {
@@ -181,5 +243,13 @@ public class KafkaConnectRestClient {
       @Override
       public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {}
     };
+  }
+
+  private static <T> CompletableFuture<List<T>> allOf(
+      final List<CompletableFuture<T>> futuresList) {
+    CompletableFuture<Void> allFuturesResult =
+        CompletableFuture.allOf(futuresList.toArray(new CompletableFuture[0]));
+    return allFuturesResult.thenApply(
+        v -> futuresList.stream().map(CompletableFuture::join).collect(Collectors.<T>toList()));
   }
 }

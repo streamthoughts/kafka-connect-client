@@ -1,0 +1,14 @@
+TaskInfo:
+  type: object
+  properties:
+    id:
+      $ref: './ConnectorInfo.yaml#/ConnectorTaskId'
+      description: 'The connector task ID.'
+    config:
+      type: object
+      additionalProperties:
+        type: string
+      description: 'Configuration parameters for the task.'
+  required:
+    - id
+    - config

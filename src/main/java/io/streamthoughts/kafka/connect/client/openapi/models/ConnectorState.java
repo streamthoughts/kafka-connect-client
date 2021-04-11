@@ -22,70 +22,25 @@ import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
-/** TaskState */
+/** ConnectorState */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class TaskState {
-  public static final String SERIALIZED_NAME_ID = "id";
+public class ConnectorState {
+  public static final String SERIALIZED_NAME_WORKER_ID = "worker_id";
 
-  @SerializedName(SERIALIZED_NAME_ID)
-  private Integer id;
+  @SerializedName(SERIALIZED_NAME_WORKER_ID)
+  private String workerId;
 
   public static final String SERIALIZED_NAME_STATE = "state";
 
   @SerializedName(SERIALIZED_NAME_STATE)
   private State state;
 
-  public static final String SERIALIZED_NAME_WORKER_ID = "worker_id";
-
-  @SerializedName(SERIALIZED_NAME_WORKER_ID)
-  private String workerId;
-
   public static final String SERIALIZED_NAME_MSG = "msg";
 
   @SerializedName(SERIALIZED_NAME_MSG)
   private String msg;
 
-  public TaskState id(Integer id) {
-
-    this.id = id;
-    return this;
-  }
-
-  /**
-   * The identifier of the Task
-   *
-   * @return id
-   */
-  @ApiModelProperty(required = true, value = "The identifier of the Task")
-  public Integer getId() {
-    return id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  public TaskState state(State state) {
-
-    this.state = state;
-    return this;
-  }
-
-  /**
-   * Get state
-   *
-   * @return state
-   */
-  @ApiModelProperty(required = true, value = "")
-  public State getState() {
-    return state;
-  }
-
-  public void setState(State state) {
-    this.state = state;
-  }
-
-  public TaskState workerId(String workerId) {
+  public ConnectorState workerId(String workerId) {
 
     this.workerId = workerId;
     return this;
@@ -105,7 +60,27 @@ public class TaskState {
     this.workerId = workerId;
   }
 
-  public TaskState msg(String msg) {
+  public ConnectorState state(State state) {
+
+    this.state = state;
+    return this;
+  }
+
+  /**
+   * Get state
+   *
+   * @return state
+   */
+  @ApiModelProperty(required = true, value = "")
+  public State getState() {
+    return state;
+  }
+
+  public void setState(State state) {
+    this.state = state;
+  }
+
+  public ConnectorState msg(String msg) {
 
     this.msg = msg;
     return this;
@@ -134,25 +109,23 @@ public class TaskState {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    TaskState taskState = (TaskState) o;
-    return Objects.equals(this.id, taskState.id)
-        && Objects.equals(this.state, taskState.state)
-        && Objects.equals(this.workerId, taskState.workerId)
-        && Objects.equals(this.msg, taskState.msg);
+    ConnectorState connectorState = (ConnectorState) o;
+    return Objects.equals(this.workerId, connectorState.workerId)
+        && Objects.equals(this.state, connectorState.state)
+        && Objects.equals(this.msg, connectorState.msg);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, state, workerId, msg);
+    return Objects.hash(workerId, state, msg);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class TaskState {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    state: ").append(toIndentedString(state)).append("\n");
+    sb.append("class ConnectorState {\n");
     sb.append("    workerId: ").append(toIndentedString(workerId)).append("\n");
+    sb.append("    state: ").append(toIndentedString(state)).append("\n");
     sb.append("    msg: ").append(toIndentedString(msg)).append("\n");
     sb.append("}");
     return sb.toString();

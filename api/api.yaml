@@ -32,7 +32,7 @@ paths:
               schema:
                 type: array
                 items:
-                    $ref: './schemas/connector-plugins.yaml#/ConnectorPlugin'
+                    $ref: './schemas/ConnectorPlugin.yaml#/ConnectorPlugin'
           description: 'OK'
       x-accepts: application/json
       x-contentType: application/json
@@ -76,7 +76,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: './schemas/connectors-info.yaml#/ConnectorInfo'
+                $ref: './schemas/ConnectorInfo.yaml#/ConnectorInfo'
           description: 'OK'
         "401":
           content: {}
@@ -258,7 +258,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: './schemas/connectors-info.yaml#/ConnectorInfo'
+                $ref: './schemas/ConnectorInfo.yaml#/ConnectorInfo'
           description: 'OK'
       security:
         - basicAuth: []
@@ -270,7 +270,7 @@ paths:
   /connectors/{name}/status:
     get:
       description: gets current status of the connector, including whether it is running, failed or paused, which worker it is assigned to, error information if it has failed, and the state of all its tasks.
-      operationId: getConnectorStatus
+      operationId: getConnectorStateInfo
       parameters:
         - description: The name of the connector
           explode: false
@@ -285,7 +285,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: './schemas/connectors-status.yaml#/ConnectorStatus'
+                $ref: './schemas/ConnectorStateInfo.yaml#/ConnectorStateInfo'
           description: 'OK'
         "401":
           content: {}
@@ -296,13 +296,41 @@ paths:
       x-contentType: application/json
       tags:
         - connect
-
-  /connectors/{name}/tasks/{taskId}:
+  /connectors/{name}/tasks:
     get:
       description: gets a task’s status.
+      operationId: getConnectorTaskInfos
+      parameters:
+        - description: The name of the connector.
+          explode: false
+          in: path
+          name: name
+          required: true
+          schema:
+            type: string
+          style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: './schemas/TaskInfo.yaml#/TaskInfo'
+          description: 'OK'
+      security:
+        - basicAuth: []
+      x-accepts: application/json
+      x-contentType: application/json
+      tags:
+        - connect
+        -
+  /connectors/{name}/tasks/{taskId}/status:
+    get:
+      description: gets a task's status.
       operationId: getConnectorTaskStatus
       parameters:
-        - description: The name of the connector?=.
+        - description: The name of the connector.
           explode: false
           in: path
           name: name
@@ -323,7 +351,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: './schemas/connectors-status.yaml#/TaskState'
+                $ref: './schemas/ConnectorStateInfo.yaml#/TaskState'
           description: 'OK'
       security:
         - basicAuth: []

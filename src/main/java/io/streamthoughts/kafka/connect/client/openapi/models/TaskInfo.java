@@ -20,59 +20,66 @@ package io.streamthoughts.kafka.connect.client.openapi.models;
 
 import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
-/** Task */
+/** TaskInfo */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class Task {
-  public static final String SERIALIZED_NAME_CONNECTOR = "connector";
+public class TaskInfo {
+  public static final String SERIALIZED_NAME_ID = "id";
 
-  @SerializedName(SERIALIZED_NAME_CONNECTOR)
-  private String connector;
+  @SerializedName(SERIALIZED_NAME_ID)
+  private ConnectorTaskId id;
 
-  public static final String SERIALIZED_NAME_TASK = "task";
+  public static final String SERIALIZED_NAME_CONFIG = "config";
 
-  @SerializedName(SERIALIZED_NAME_TASK)
-  private Integer task;
+  @SerializedName(SERIALIZED_NAME_CONFIG)
+  private Map<String, String> config = new HashMap<>();
 
-  public Task connector(String connector) {
+  public TaskInfo id(ConnectorTaskId id) {
 
-    this.connector = connector;
+    this.id = id;
     return this;
   }
 
   /**
-   * The name of the connector the task belongs to.
+   * Get id
    *
-   * @return connector
+   * @return id
    */
-  @ApiModelProperty(required = true, value = "The name of the connector the task belongs to.")
-  public String getConnector() {
-    return connector;
+  @ApiModelProperty(required = true, value = "")
+  public ConnectorTaskId getId() {
+    return id;
   }
 
-  public void setConnector(String connector) {
-    this.connector = connector;
+  public void setId(ConnectorTaskId id) {
+    this.id = id;
   }
 
-  public Task task(Integer task) {
+  public TaskInfo config(Map<String, String> config) {
 
-    this.task = task;
+    this.config = config;
+    return this;
+  }
+
+  public TaskInfo putConfigItem(String key, String configItem) {
+    this.config.put(key, configItem);
     return this;
   }
 
   /**
-   * Task ID within the connector.
+   * Configuration parameters for the task.
    *
-   * @return task
+   * @return config
    */
-  @ApiModelProperty(required = true, value = "Task ID within the connector.")
-  public Integer getTask() {
-    return task;
+  @ApiModelProperty(required = true, value = "Configuration parameters for the task.")
+  public Map<String, String> getConfig() {
+    return config;
   }
 
-  public void setTask(Integer task) {
-    this.task = task;
+  public void setConfig(Map<String, String> config) {
+    this.config = config;
   }
 
   @Override
@@ -83,21 +90,21 @@ public class Task {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Task task = (Task) o;
-    return Objects.equals(this.connector, task.connector) && Objects.equals(this.task, task.task);
+    TaskInfo taskInfo = (TaskInfo) o;
+    return Objects.equals(this.id, taskInfo.id) && Objects.equals(this.config, taskInfo.config);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(connector, task);
+    return Objects.hash(id, config);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Task {\n");
-    sb.append("    connector: ").append(toIndentedString(connector)).append("\n");
-    sb.append("    task: ").append(toIndentedString(task)).append("\n");
+    sb.append("class TaskInfo {\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    config: ").append(toIndentedString(config)).append("\n");
     sb.append("}");
     return sb.toString();
   }

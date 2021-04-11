@@ -8,8 +8,9 @@ Method | HTTP request | Description
 [**getConnectVersion**](ConnectApi.md#getConnectVersion) | **GET** / | 
 [**getConnectorConfig**](ConnectApi.md#getConnectorConfig) | **GET** /connectors/{name}/config | 
 [**getConnectorInfo**](ConnectApi.md#getConnectorInfo) | **GET** /connectors/{name} | 
-[**getConnectorStatus**](ConnectApi.md#getConnectorStatus) | **GET** /connectors/{name}/status | 
-[**getConnectorTaskStatus**](ConnectApi.md#getConnectorTaskStatus) | **GET** /connectors/{name}/tasks/{taskId} | 
+[**getConnectorStateInfo**](ConnectApi.md#getConnectorStateInfo) | **GET** /connectors/{name}/status | 
+[**getConnectorTaskInfos**](ConnectApi.md#getConnectorTaskInfos) | **GET** /connectors/{name}/tasks | 
+[**getConnectorTaskStatus**](ConnectApi.md#getConnectorTaskStatus) | **GET** /connectors/{name}/tasks/{taskId}/status | 
 [**listConnectorPlugins**](ConnectApi.md#listConnectorPlugins) | **GET** /connector-plugins | 
 [**listConnectors**](ConnectApi.md#listConnectors) | **GET** /connectors | 
 [**pauseConnector**](ConnectApi.md#pauseConnector) | **PUT** /connectors/{name}/pause | 
@@ -265,9 +266,9 @@ No authorization required
 **200** | OK |  -  |
 **401** | Unauthorized |  -  |
 
-<a name="getConnectorStatus"></a>
-# **getConnectorStatus**
-> ConnectorStatus getConnectorStatus(name)
+<a name="getConnectorStateInfo"></a>
+# **getConnectorStateInfo**
+> ConnectorStateInfo getConnectorStateInfo(name)
 
 
 
@@ -290,10 +291,10 @@ public class Example {
     ConnectApi apiInstance = new ConnectApi(defaultClient);
     String name = "name_example"; // String | The name of the connector
     try {
-      ConnectorStatus result = apiInstance.getConnectorStatus(name);
+      ConnectorStateInfo result = apiInstance.getConnectorStateInfo(name);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling ConnectApi#getConnectorStatus");
+      System.err.println("Exception when calling ConnectApi#getConnectorStateInfo");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -311,7 +312,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ConnectorStatus**](ConnectorStatus.md)
+[**ConnectorStateInfo**](ConnectorStateInfo.md)
 
 ### Authorization
 
@@ -328,9 +329,9 @@ No authorization required
 **200** | OK |  -  |
 **401** | Unauthorized |  -  |
 
-<a name="getConnectorTaskStatus"></a>
-# **getConnectorTaskStatus**
-> TaskState getConnectorTaskStatus(name, taskId)
+<a name="getConnectorTaskInfos"></a>
+# **getConnectorTaskInfos**
+> List&lt;TaskInfo&gt; getConnectorTaskInfos(name)
 
 
 
@@ -351,7 +352,69 @@ public class Example {
     defaultClient.setBasePath("http://localhost");
 
     ConnectApi apiInstance = new ConnectApi(defaultClient);
-    String name = "name_example"; // String | The name of the connector?=.
+    String name = "name_example"; // String | The name of the connector.
+    try {
+      List<TaskInfo> result = apiInstance.getConnectorTaskInfos(name);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling ConnectApi#getConnectorTaskInfos");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **name** | **String**| The name of the connector. |
+
+### Return type
+
+[**List&lt;TaskInfo&gt;**](TaskInfo.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+
+<a name="getConnectorTaskStatus"></a>
+# **getConnectorTaskStatus**
+> TaskState getConnectorTaskStatus(name, taskId)
+
+
+
+gets a task&#39;s status.
+
+### Example
+```java
+// Import classes:
+import io.streamthoughts.kafka.connect.client.openapi.ApiClient;
+import io.streamthoughts.kafka.connect.client.openapi.ApiException;
+import io.streamthoughts.kafka.connect.client.openapi.Configuration;
+import io.streamthoughts.kafka.connect.client.openapi.models.*;
+import io.streamthoughts.kafka.connect.client.openapi.apis.ConnectApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+
+    ConnectApi apiInstance = new ConnectApi(defaultClient);
+    String name = "name_example"; // String | The name of the connector.
     Integer taskId = 56; // Integer | The ID of the task to restart.
     try {
       TaskState result = apiInstance.getConnectorTaskStatus(name, taskId);
@@ -371,7 +434,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **name** | **String**| The name of the connector?&#x3D;. |
+ **name** | **String**| The name of the connector. |
  **taskId** | **Integer**| The ID of the task to restart. |
 
 ### Return type

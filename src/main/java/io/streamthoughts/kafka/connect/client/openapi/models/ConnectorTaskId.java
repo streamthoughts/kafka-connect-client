@@ -20,91 +20,59 @@ package io.streamthoughts.kafka.connect.client.openapi.models;
 
 import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
-/** ConnectorStatus */
+/** ConnectorTaskId */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class ConnectorStatus {
-  public static final String SERIALIZED_NAME_NAME = "name";
-
-  @SerializedName(SERIALIZED_NAME_NAME)
-  private String name;
-
+public class ConnectorTaskId {
   public static final String SERIALIZED_NAME_CONNECTOR = "connector";
 
   @SerializedName(SERIALIZED_NAME_CONNECTOR)
-  private ConnectorStatus connector;
+  private String connector;
 
-  public static final String SERIALIZED_NAME_TASKS = "tasks";
+  public static final String SERIALIZED_NAME_TASK = "task";
 
-  @SerializedName(SERIALIZED_NAME_TASKS)
-  private List<TaskState> tasks = new ArrayList<>();
+  @SerializedName(SERIALIZED_NAME_TASK)
+  private Integer task;
 
-  public ConnectorStatus name(String name) {
-
-    this.name = name;
-    return this;
-  }
-
-  /**
-   * The name of the connector
-   *
-   * @return name
-   */
-  @ApiModelProperty(required = true, value = "The name of the connector")
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public ConnectorStatus connector(ConnectorStatus connector) {
+  public ConnectorTaskId connector(String connector) {
 
     this.connector = connector;
     return this;
   }
 
   /**
-   * Get connector
+   * The name of the connector the task belongs to.
    *
    * @return connector
    */
-  @ApiModelProperty(required = true, value = "")
-  public ConnectorStatus getConnector() {
+  @ApiModelProperty(required = true, value = "The name of the connector the task belongs to.")
+  public String getConnector() {
     return connector;
   }
 
-  public void setConnector(ConnectorStatus connector) {
+  public void setConnector(String connector) {
     this.connector = connector;
   }
 
-  public ConnectorStatus tasks(List<TaskState> tasks) {
+  public ConnectorTaskId task(Integer task) {
 
-    this.tasks = tasks;
-    return this;
-  }
-
-  public ConnectorStatus addTasksItem(TaskState tasksItem) {
-    this.tasks.add(tasksItem);
+    this.task = task;
     return this;
   }
 
   /**
-   * The states of tasks
+   * Task ID within the connector.
    *
-   * @return tasks
+   * @return task
    */
-  @ApiModelProperty(required = true, value = "The states of tasks")
-  public List<TaskState> getTasks() {
-    return tasks;
+  @ApiModelProperty(required = true, value = "Task ID within the connector.")
+  public Integer getTask() {
+    return task;
   }
 
-  public void setTasks(List<TaskState> tasks) {
-    this.tasks = tasks;
+  public void setTask(Integer task) {
+    this.task = task;
   }
 
   @Override
@@ -115,24 +83,22 @@ public class ConnectorStatus {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ConnectorStatus connectorStatus = (ConnectorStatus) o;
-    return Objects.equals(this.name, connectorStatus.name)
-        && Objects.equals(this.connector, connectorStatus.connector)
-        && Objects.equals(this.tasks, connectorStatus.tasks);
+    ConnectorTaskId connectorTaskId = (ConnectorTaskId) o;
+    return Objects.equals(this.connector, connectorTaskId.connector)
+        && Objects.equals(this.task, connectorTaskId.task);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, connector, tasks);
+    return Objects.hash(connector, task);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ConnectorStatus {\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("class ConnectorTaskId {\n");
     sb.append("    connector: ").append(toIndentedString(connector)).append("\n");
-    sb.append("    tasks: ").append(toIndentedString(tasks)).append("\n");
+    sb.append("    task: ").append(toIndentedString(task)).append("\n");
     sb.append("}");
     return sb.toString();
   }

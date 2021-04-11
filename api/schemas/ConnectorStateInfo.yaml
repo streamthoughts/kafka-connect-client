@@ -1,21 +1,24 @@
-ConnectorStatus:
+ConnectorStateInfo:
   type: object
   properties:
     name:
       type: string
       description: 'The name of the connector'
     connector:
-      $ref: '#/ConnectorStatus'
+      $ref: '#/ConnectorState'
       description: 'Configuration parameters for the connector.'
     tasks:
       type: array
       items:
         $ref: '#/TaskState'
       description: The states of tasks
+    type:
+      type: string
   required:
     - name
     - connector
     - tasks
+    - type
 
 ConnectorState:
   type: object
@@ -24,11 +27,14 @@ ConnectorState:
     - worker_id
   properties:
     worker_id:
-      type: integer
+      type: string
       description: 'The Kafka Connect Worker ID'
     state:
       $ref: '#/State'
       description: 'The state of the connector'
+    msg:
+      type: string
+      description: 'The error trace'
 
 TaskState:
   type: object
@@ -46,7 +52,9 @@ TaskState:
     worker_id:
       type: string
       description: 'The Kafka Connect Worker ID'
-
+    msg:
+      type: string
+      description: 'The error trace'
 State:
   type: string
   description: 'State'

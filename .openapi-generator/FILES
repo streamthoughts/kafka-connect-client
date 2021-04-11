@@ -2,9 +2,11 @@ api/openapi.yaml
 docs/ConnectApi.md
 docs/ConnectorInfo.md
 docs/ConnectorPlugin.md
-docs/ConnectorStatus.md
+docs/ConnectorState.md
+docs/ConnectorStateInfo.md
+docs/ConnectorTaskId.md
 docs/State.md
-docs/Task.md
+docs/TaskInfo.md
 docs/TaskState.md
 docs/Version.md
 src/main/java/io/streamthoughts/kafka/connect/client/openapi/ApiCallback.java
@@ -27,8 +29,10 @@ src/main/java/io/streamthoughts/kafka/connect/client/openapi/auth/HttpBasicAuth.
 src/main/java/io/streamthoughts/kafka/connect/client/openapi/auth/HttpBearerAuth.java
 src/main/java/io/streamthoughts/kafka/connect/client/openapi/models/ConnectorInfo.java
 src/main/java/io/streamthoughts/kafka/connect/client/openapi/models/ConnectorPlugin.java
-src/main/java/io/streamthoughts/kafka/connect/client/openapi/models/ConnectorStatus.java
+src/main/java/io/streamthoughts/kafka/connect/client/openapi/models/ConnectorState.java
+src/main/java/io/streamthoughts/kafka/connect/client/openapi/models/ConnectorStateInfo.java
+src/main/java/io/streamthoughts/kafka/connect/client/openapi/models/ConnectorTaskId.java
 src/main/java/io/streamthoughts/kafka/connect/client/openapi/models/State.java
-src/main/java/io/streamthoughts/kafka/connect/client/openapi/models/Task.java
+src/main/java/io/streamthoughts/kafka/connect/client/openapi/models/TaskInfo.java
 src/main/java/io/streamthoughts/kafka/connect/client/openapi/models/TaskState.java
 src/main/java/io/streamthoughts/kafka/connect/client/openapi/models/Version.java
