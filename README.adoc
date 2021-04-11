@@ -25,9 +25,12 @@ This project is available in Maven Central. You can add Kafka Connect Client to 
 ----
 
 === Build the project
+
 **Prerequisites for building the project:**
+
 * Git
 * Java 11
+* Docker (for running integration-tests)
 
 [source, bash]
 ----
@@ -87,8 +90,8 @@ Please 🌟 this repository to support us!
 
 Any feedback, bug reports and PRs are greatly appreciated!
 
-- Source Code: [https://github.com/streamthoughts/azkarra-streams](https://github.com/streamthoughts/kafka-connect-client)
-- Issue Tracker: [https://github.com/streamthoughts/azkarra-streams/issues](https://github.com/streamthoughts/kafka-connect-client/issues)
+- Source Code: https://github.com/streamthoughts/kafka-connect-client[https://github.com/streamthoughts/kafka-connect-client]
+- Issue Tracker: https://github.com/streamthoughts/kafka-connect-client/issues[https://github.com/streamthoughts/kafka-connect-client/issues]
 
 == Licence
 
