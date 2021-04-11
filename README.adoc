@@ -7,6 +7,7 @@ image:https://img.shields.io/github/v/release/streamthoughts/kafka-connect-clien
 image:https://img.shields.io/github/issues-raw/streamthoughts/kafka-connect-client[GitHub issues]
 image:https://img.shields.io/github/workflow/status/streamthoughts/kafka-connect-client/Java%20CI%20with%20Maven[GitHub Workflow Status]
 image:https://img.shields.io/github/stars/streamthoughts/kafka-connect-client?style=social[GitHub Repo stars]
+image:https://img.shields.io/maven-central/v/io.streamthoughts/kafka-connect-client/0.1[Maven Central]
 
 toc::[]
 
@@ -47,6 +48,16 @@ CompletableFuture<ConnectorInfo> future = client
           .withTopic("connect-test")
           .withConnectorProp("file", "/tmp/test.txt")
   );
+----
+
+Listing all failed Tasks::
+[source, java]
+----
+ApiClient apiClient = Config.defaultClient();
+Configuration.setDefaultApiClient(apiClient);
+
+KafkaConnectRestClient client = new KafkaConnectRestClient();
+List<TaskState> failedTasks = client.listTasksWithState(state -> state.equals(State.FAILED)).get();
 ----
 
 == Licence
