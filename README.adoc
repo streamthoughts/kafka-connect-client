@@ -47,7 +47,7 @@ Listing all active connectors::
 ApiClient client = Config.defaultClient();
 Configuration.setDefaultApiClient(client);
 
-ConnectApi api new ConnectApi();
+ConnectApi api = new ConnectApi();
 
 final List<String> connectors = api.listConnectors();
 ----
